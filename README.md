@@ -197,7 +197,7 @@ python edem_data_generator.py \
     --city_name <CITY_NAME> 
 ```
 
-<img src="00_DocAux/.images/dataflow_job.png" width="700"/>
+<img src="00_DocAux/.images/dataflow_job.png" width="1500"/>
 
 - Computer Vision Model Output (Label Detection)
 
@@ -285,6 +285,7 @@ gcloud functions delete <YOUR_CLOUD_FUNCTION_NAME> --region <YOUR_REGION_ID>
 
 ```
 gcloud run services delete <YOUR_CLOUR_RUN_SERVICE_NAME> --platform=managed --region=<YOUR_REGION_ID>
+```
 
 - Disable the required Google APIs
 
@@ -304,10 +305,29 @@ gcloud services disable firestore.googleapis.com
 
 ## Bibliography & Additional Resources
 
-- [Apache Beam Basics](https://beam.apache.org/documentation/programming-guide/)
+- Dataflow
 
-- [Apache Beam ML](https://beam.apache.org/documentation/ml/about-ml/)
+    - [Apache Beam Basics](https://beam.apache.org/documentation/programming-guide/)
+    
+    - [Apache Beam ML](https://beam.apache.org/documentation/ml/about-ml/)
+    
+    - [Dataflow Flex Templates](https://cloud.google.com/dataflow/docs/guides/templates/using-flex-templates)
+    
+    - [Dataflow Practical Exercises Guide](https://cloud.google.com/dataflow/docs/guides/)
 
-- [Dataflow Flex Templates](https://cloud.google.com/dataflow/docs/guides/templates/using-flex-templates)
+- IAM
+    - https://cloud.google.com/iam/docs/service-accounts-create
+    - https://cloud.google.com/iam/docs/understanding-roles
+ 
+- Firestore
+    - https://firebase.google.com/docs/firestore/quickstart#python
 
-- [Dataflow Practical Exercises Guide](https://cloud.google.com/dataflow/docs/guides/)
+- Cloud Functions
+    - https://cloud.google.com/functions/docs/console-quickstart
+
+- Artifact Registry
+    - https://cloud.google.com/artifact-registry/docs/repositories/create-repos
+
+- Cloud Run
+    - https://cloud.google.com/run/docs/deploying
+    - https://cloud.google.com/sql/docs/postgres/connect-run
