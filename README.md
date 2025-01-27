@@ -6,8 +6,7 @@ EDEM 2025
 - Professor: [Javi Briones](https://github.com/jabrio)
 
 #### Case description
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/1200px-Tesla_logo.png" alt="WFM" width="110" h/>
-<br>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/1200px-Tesla_logo.png" alt="WFM" width="170" h/>
 
 Tesla seeks to enhance user experience by providing accurate real-time information about the remaining range of its electric vehicles. This range depends on multiple factors, such as battery status, driving style, weather conditions, terrain, and traffic status.
 
@@ -28,7 +27,7 @@ In cases of critical range, a notification must be sent to the vehicle, informin
 - The infrastructure must be managed as a Terraform project, allowing the entire architecture to be deployed seamlessly with a single **terraform apply** command. **[Homework Assignment]**
 
 #### Data Architecture
-<img src="00_DocAux/.images/serverless_edem_2025_architecture.png" width="700"/>
+<img src="00_DocAux/.images/serverless_edem_2025_architecture.png" width="1500"/>
 
 ## Setup Requirements
 
