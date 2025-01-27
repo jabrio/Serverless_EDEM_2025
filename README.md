@@ -140,7 +140,7 @@ Go to the [Cloud Run Function Console](https://console.cloud.google.com/function
 
 - Click on Next.
 
-- Select **Python 3.10** as Runtime.
+- Select **Python 3.12** as Runtime.
 
 - **Deploy** your Function. We will simply simulate the output by handling the push notification process since we do not have a developer app to link our architecture to Firebase.
 
