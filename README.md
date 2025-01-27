@@ -23,11 +23,7 @@ In cases of critical range, a notification must be sent to the vehicle, informin
 - Design an architecture capable of managing data from thousands of vehicles simultaneously.
 
 
-#### Case Requirements
-
-- The remaining range of the vehicle **must be sent to the driver as a notification if the current battery level is below 30%**, specifying the number of remaining kilometers calculated based on the vehicle's telemetry data enriched with images captured by the vehicle's cameras.
-
-- A **dashboard** must be created to monitor the various vehicles, providing a user-friendly interface for stakeholders.
+#### Homework Assignment
 
 - The infrastructure must be managed as a Terraform project, allowing the entire architecture to be deployed seamlessly with a single **terraform apply** command. **[Homework Assignment]**
 
