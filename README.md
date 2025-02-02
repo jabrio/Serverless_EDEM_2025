@@ -158,8 +158,8 @@ python edem_dataflow_pipeline.py \
     --driving_telemetry_subscription <YOUR_DRIVING_PUBSUB_SUBSCRIPTION_NAME> \
     --environment_telemetry_subscription <YOUR_ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME> \
     --firestore_collection <YOUR_FIRESTORE_COLLECTION_NAME>
-    --image_api <YOUR_OUTPUT_PUBSUB_TOPIC_NAME> \
-    --radar_id <API_URL> \
+    --output_topic <YOUR_OUTPUT_PUBSUB_TOPIC_NAME> \
+    --image_api <API_URL> \
     --system_id <YOUR_USER_NAME>
 ```
 
@@ -167,12 +167,12 @@ python edem_dataflow_pipeline.py \
 ```
 python edem_dataflow_pipeline.py \
     --project_id <YOUR_PROJECT_ID> \
-    --battery_telemetry_subscription <YOUR_BATTERY_PUBSUB_SUBSCRIPTION_RESOURCE_NAME> \
-    --driving_telemetry_subscription <YOUR_DRIVING_PUBSUB_SUBSCRIPTION_RESOURCE_NAME> \
-    --environment_telemetry_subscription <YOUR_ENVIRONMENT_PUBSUB_SUBSCRIPTION_RESOURCE_NAME> \
+    --battery_telemetry_subscription <YOUR_BATTERY_PUBSUB_SUBSCRIPTION_NAME> \
+    --driving_telemetry_subscription <YOUR_DRIVING_PUBSUB_SUBSCRIPTION_NAME> \
+    --environment_telemetry_subscription <YOUR_ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME> \
     --firestore_collection <YOUR_FIRESTORE_COLLECTION_NAME>
-    --image_api <YOUR_OUTPUT_PUBSUB_TOPIC_NAME> \
-    --radar_id <API_URL> \
+    --output_topic <YOUR_OUTPUT_PUBSUB_TOPIC_NAME> \
+    --image_api <API_URL> \
     --system_id <YOUR_USER_NAME> \
     --runner DataflowRunner \
     --job_name <YOUR_DATAFLOW_JOB> \
@@ -243,7 +243,7 @@ gcloud dataflow flex-template build gs://<YOUR_BUCKET_NAME>/<YOUR_TEMPLATE_NAME>
 ```
 gcloud dataflow flex-template run "<YOUR_DATAFLOW_JOB_NAME>" \
  --template-file-gcs-location="gs://<YOUR_BUCKET_NAME>/<YOUR_TEMPLATE_NAME>.json" \
- --parameters project_id="<YOUR_PROJECT_ID>",input_subscription="<YOUR_SUBSCRIPTION_NAME>",output_topic="<YOUR_OUTPUT_TOPIC_NAME>",radar_id=<YOUR_RADAR_ID>,cars_api=<API_URL> \
+ --parameters project_id="<YOUR_PROJECT_ID>",battery_telemetry_subscription="<YOUR_BATTERY_PUBSUB_SUBSCRIPTION_NAME>",driving_telemetry_subscription="<YOUR_DRIVING_PUBSUB_SUBSCRIPTION_NAME>",environment_telemetry_subscription="<YOUR_ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME>",firestore_collection="<YOUR_FIRESTORE_COLLECTION_NAME>",output_topic="<YOUR_OUTPUT_PUBSUB_TOPIC_NAME>",image_api="<API_URL>",system_id="<YOUR_USER_NAME>" \
  --region=<YOUR_REGION_ID> \
  --max-workers=1
 ```
