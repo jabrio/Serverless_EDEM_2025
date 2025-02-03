@@ -86,7 +86,15 @@ Go to the [Google Cloud Firestore Console](https://console.cloud.google.com/fire
 
 ## Google Cloud Artifact Registry
 
-Go back to the terminal and navigate to the [Cloud Run](/02_Code/02_CloudRun/00_Service/) folder. Now, we are going to deploy a Cloud Run service with the Docker image of Grafana & a Cloud Run Job for dumping data from Firestore to BigQuery on a daily basis.
+-  As a first step, go to the [Artifact Registry Console](https://console.cloud.google.com/artifacts) and create a repository with the default values. Alternatively, you can create it using the CLI:
+
+```
+gcloud artifacts repositories create <YOUR_REPOSITORY_NAME> \
+ --repository-format=docker \
+ --location=<YOUR_REGION_ID>
+```
+
+- Once the repository is created, go back to the terminal and navigate to the [Cloud Run](/02_Code/02_CloudRun/00_Service/) folder. Now, we are going to deploy a Cloud Run service with the Docker image of Grafana & a Cloud Run Job for dumping data from Firestore to BigQuery on a daily basis.
 
 #### Cloud Run Service
 
@@ -270,14 +278,6 @@ Results for image:
 ```
 
 ## Dataflow Flex Templates
-
-- Go to the [Artifact Registry Console](https://console.cloud.google.com/artifacts) and create a repository with the default values. Alternativaly, it might be created using cli:
-
-```
-gcloud artifacts repositories create <YOUR_REPOSITORY_NAME> \
- --repository-format=docker \
- --location=<YOUR_REGION_ID>
-```
 
 - Build Dataflow Flex Template
 
