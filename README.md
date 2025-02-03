@@ -55,7 +55,7 @@ gcloud services enable logging.googleapis.com
 gcloud services enable artifactregistry.googleapis.com
 gcloud services enable eventarc.googleapis.com
 gcloud services enable firestore.googleapis.com
-
+gcloud services enable secretmanager.googleapis.com
 ```
 
 - Create a Python environment using Anaconda, selecting **Python 3.10 or 3.11** as the version.
@@ -86,9 +86,9 @@ Go to the [Google Cloud Firestore Console](https://console.cloud.google.com/fire
 
 ## Google Cloud Artifact Registry
 
-Go to the [Google Cloud Firestore Console](https://console.cloud.google.com/firestore) and create a database **(default) in native mode**. This will allow us to store all the data sent by the different systems.
+Go back to the terminal and navigate to the [Cloud Run](/02_Code/02_CloudRun/00_Service/) folder. Now, we are going to deploy a Cloud Run service with the Docker image of Grafana & a Cloud Run Job for dumping data from Firestore to BigQuery on a daily basis.
 
-Go back to the terminal and navigate to the [Cloud Run](02_Code/04_CloudRun) folder. Now, we are going to deploy a Cloud Run service with the Docker image of Grafana.
+#### Cloud Run Service
 
 - Build the Docker Image.
 
@@ -110,7 +110,43 @@ docker tag grafana-cloud-run <REGION_ID>-docker.pkg.dev/<PROJECT_ID>/<ARTIFACT_R
 docker push <REGION_ID>-docker.pkg.dev/<PROJECT_ID>/<ARTIFACT_REPOSITORY>/grafana-cloud-run:<TAG>
 ```
 
+#### Cloud Run Job
+
+Repeat the same commands executed above, but now specifying a [different image](/02_Code/02_CloudRun/01_Job/) name for the Cloud Run job and linux/amd64.
+
+- Build the Docker Image.
+
+```
+docker build --platform linux/amd64 -t run-job .
+```
+
+- Tag the Docker Image.
+
+```
+docker tag run-job <REGION_ID>-docker.pkg.dev/<PROJECT_ID>/<ARTIFACT_REPOSITORY>/run-job:<TAG>
+```
+
+- Push the image to Artifact Registry.
+
+```
+docker push <REGION_ID>-docker.pkg.dev/<PROJECT_ID>/<ARTIFACT_REPOSITORY>/run-job:<TAG>
+```
+
+## BigQuery
+
+- Run the following command from the terminal or Cloud Shell to create a table in BigQuery **with the provided schema** in this [folder](/02_Code/03_BigQuery).
+
+```
+cd /02_Code/03_BigQuery
+
+bq mk --table <YOUR_PROJECT_ID>:<YOUR_DATASET_NAME>.<YOUR_TABLE_NAME> schema.json
+```
+
+- Verify that the table has been created successfully.
+
 ## Google Cloud Run
+
+#### A. Cloud Run Service
 
 Go to the [Cloud Run Console](https://console.cloud.google.com/run) and click on **Create Service**:
 
@@ -124,7 +160,22 @@ Go to the [Cloud Run Console](https://console.cloud.google.com/run) and click on
     - Click on **Data Sources**.
     - Install the **Firestore** plugin.
     - Enter the required connection details.
-    - Once the connection is established, navigate to the Explore or Dashboard tab to create charts that effectively represent business metrics using [FireSQL](https://firebaseopensource.com/projects/jsayol/firesql/).
+    - Once the connection is established, navigate to the Explore or Dashboard tab to create charts that effectively represent business metrics using [FireQL](https://github.com/pgollangi/FireQL).
+
+#### B. Cloud Run Job
+The purpose of this Cloud Run Job is to execute a data dump from Firestore to BigQuery once a day, allowing the analytics team to analyze the data.
+
+- Once the docker image is already pushed to Artifact Registry, go to the Cloud Run console (https://console.cloud.google.com/run)
+- Select **Deploy Container** and click on **Job**.
+- Choose the **previously built Docker image**, as well as the region.
+- Set the following environment variables in the *Variables & Secrets* tab:
+
+```
+FIRESTORE_COLLECTION = <YOUR_FIRESTORE_COLLECTION>
+BIGQUERY_DATASET = <YOUR_BIGQUERY_DATASET>
+BIGQUERY_TABLE = <YOUR_BIGQUERY_TABLE>
+```
+- Click on **Create**.
 
 ## Google Cloud Run Functions
 
@@ -140,10 +191,13 @@ Go to the [Cloud Run Function Console](https://console.cloud.google.com/function
 
 - Click on Next.
 
-- Select **Python 3.12** as Runtime.
+- Upload the ZIP file located in the [folder](/02_Code/01_CloudFunctions/)
+
+- Select **Python 3.10** as Runtime.
+
+- Type **get_pubsub_message** as Entry point.
 
 - **Deploy** your Function. We will simply simulate the output by handling the push notification process since we do not have a developer app to link our architecture to Firebase.
-
 
 ## Run Dataflow
 
@@ -215,7 +269,6 @@ Results for image:
   Label: Travel, Score: 0.7682755589485168
 ```
 
-
 ## Dataflow Flex Templates
 
 - Go to the [Artifact Registry Console](https://console.cloud.google.com/artifacts) and create a repository with the default values. Alternativaly, it might be created using cli:
@@ -247,6 +300,29 @@ gcloud dataflow flex-template run "<YOUR_DATAFLOW_JOB_NAME>" \
  --region=<YOUR_REGION_ID> \
  --max-workers=1
 ```
+
+## CI/CD: Cloud Build
+
+- Go to the [Cloud Build console](https://console.cloud.google.com/cloud-build)
+- In the left panel, select *Repositories*.
+- In the *2nd Gen* tab, click on **Link Repository**.
+- In the *Connection* dropdown, click on **Create host connection** and link your GitHub account:
+    - Select only the repositories associated with your account that you want to link.
+    - Click install.
+    - Verify that the connection is created successfully.
+
+- In the left panel, select *Triggers*.
+    - Give it a name and select a specific region.
+    - The event will be **Push to a branch**.
+    - In *Repository*, connect to a new repository and s**elect the repository previously chosen in the connection**.
+    - Click on **Connect**.
+    - Select the **branch** this trigger will listen for changes on.
+    - As configuration, select **Cloud Build configuration file (yaml or json)**.
+    - For location, add the path to your [build.yml](/02_Code/04_CICD/build.yml) file. Alternatively, you can select inline and copy and paste the content of the file.
+    - Select a service account with sufficient permissions to execute a Dataflow job (*If you do not specify a service account, it will use the default Compute Engine service account*)
+    - Click on **Create**.
+
+- Once the trigger is created, each new push to the specified branch will trigger the actions specified in the build file, following the steps we set.
 
 ## Clean Up
 
@@ -287,6 +363,12 @@ gcloud functions delete <YOUR_CLOUD_FUNCTION_NAME> --region <YOUR_REGION_ID>
 gcloud run services delete <YOUR_CLOUR_RUN_SERVICE_NAME> --platform=managed --region=<YOUR_REGION_ID>
 ```
 
+- Remove your Cloud Run Job
+
+```
+gcloud run jobs delete <YOUR_CLOUD_RUN_JOB_NAME> --region=<YOUR_REGION_ID>
+```
+
 - Disable the required Google APIs
 
 ```
@@ -300,6 +382,7 @@ gcloud services disable logging.googleapis.com
 gcloud services disable artifactregistry.googleapis.com
 gcloud services disable eventarc.googleapis.com
 gcloud services disable firestore.googleapis.com
+gcloud services disable secretmanager.googleapis.com
 
 ```
 
@@ -331,3 +414,5 @@ gcloud services disable firestore.googleapis.com
 - Cloud Run
     - https://cloud.google.com/run/docs/deploying
     - https://cloud.google.com/sql/docs/postgres/connect-run
+
+- [Dataflow Practical Exercises Guide](https://cloud.google.com/dataflow/docs/guides/)
