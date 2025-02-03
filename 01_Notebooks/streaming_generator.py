@@ -75,7 +75,7 @@ def run_generator(project_id: str, topic_name: str):
 
         pubsub_class.publishMessages({"temp": temp})
 
-        time.sleep(10)
+        time.sleep(5)
 
 if __name__ == "__main__":
     
