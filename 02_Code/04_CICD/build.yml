@@ -1,0 +1,43 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    id: Build Dataflow Flex Template
+    args: ['dataflow', 'flex-template', 'build',
+           'gs://$_DATAFLOW_BASE_BUCKET/$_DATAFLOW_TEMPLATE_NAME.json',
+           '--image-gcr-path=$_REGION_ID-docker.pkg.dev/$PROJECT_ID/$_ARTIFACT_REGISTRY_REPOSITORY/$_ARTIFACT_REGISTRY_IMAGE_NAME:$COMMIT_SHA',
+           '--flex-template-base-image=PYTHON3',
+           '--sdk-language=PYTHON',
+           '--py-path=.',
+           '--env=FLEX_TEMPLATE_PYTHON_PY_FILE=$_DATAFLOW_PYTHON_FILE_PATH',
+           '--env=FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=YOUR_PATH_TO_THE_REQUIREMENTS_FILE'
+    ]
+    waitFor: ['-']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    id: Run Dataflow Flex Template
+    args: ['dataflow', 'flex-template', 'run',
+           '--template-file-gcs-location=gs://$_DATAFLOW_BASE_BUCKET/$_DATAFLOW_TEMPLATE_NAME.json',
+           '--parameters=project_id=$PROJECT_ID,battery_telemetry_subscription=$_BATTERY_PUBSUB_SUBSCRIPTION_NAME,driving_telemetry_subscription=$_DRIVING_PUBSUB_SUBSCRIPTION_NAME,environment_telemetry_subscription=$_ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME,firestore_collection=$_FIRESTORE_COLLECTION_NAME_,output_topic=$_OUTPUT_PUBSUB_TOPIC_NAME,image_api=$_IMAGE_API_URL,system_id=$_SYSTEM_ID',
+           '--region=$_REGION_ID',
+           '--max-workers=1',
+           '--job_name=$_DATAFLOW_JOB_NAME'
+    ]
+    waitFor: ['Build Dataflow Flex Template']
+options:
+  logging: STACKDRIVER_ONLY
+substitutions:
+  _DATAFLOW_BASE_BUCKET: <YOUR_BUCKET_NAME>
+  _DATAFLOW_JOB_NAME: <YOUR_DATAFLOW_JOB_NAME>
+  _DATAFLOW_TEMPLATE_NAME: <YOUR_TEMPLATE_NAME>
+  _REGION_ID: <YOUR_REGION_ID>
+  _ARTIFACT_REGISTRY_REPOSITORY: <YOUR_REPOSITORY_NAME>
+  _ARTIFACT_REGISTRY_IMAGE_NAME: <YOUR_IMAGE_NAME>
+  _DATAFLOW_PYTHON_FILE_PATH: <YOUR_PATH_TO_THE_PY_FILE>
+  _DATAFLOW_REQUIREMENTS_FILE_PATH: <YOUR_PATH_TO_THE_REQUIREMENTS_FILE>
+  _BATTERY_PUBSUB_SUBSCRIPTION_NAME: <YOUR_BATTERY_PUBSUB_SUBSCRIPTION_NAME>
+  _DRIVING_PUBSUB_SUBSCRIPTION_NAME: <YOUR_DRIVING_PUBSUB_SUBSCRIPTION_NAME>
+  _ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME: <YOUR_ENVIRONMENT_PUBSUB_SUBSCRIPTION_NAME>
+  _FIRESTORE_COLLECTION_NAME_: <YOUR_FIRESTORE_COLLECTION_NAME>
+  _OUTPUT_PUBSUB_TOPIC_NAME: <YOUR_OUTPUT_PUBSUB_TOPIC_NAME>
+  _IMAGE_API_URL: <API_URL>
+  _SYSTEM_ID: <YOUR_USER_NAME>
