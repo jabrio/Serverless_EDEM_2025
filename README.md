@@ -104,8 +104,6 @@ gcloud artifacts repositories create <YOUR_REPOSITORY_NAME> \
 docker build -t grafana-cloud-run .
 ```
 
-- Go to the [Artifact Registry Console](https://console.cloud.google.com/artifacts) and create a repository with the default values.
-
 - Tag the Docker Image.
 
 ```
