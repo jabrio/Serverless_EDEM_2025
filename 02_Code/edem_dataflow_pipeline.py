@@ -47,7 +47,7 @@ beam.options.pipeline_options.PipelineOptions.allow_non_parallel_instruction_out
 DataflowRunner.__test__ = False
 
 """ Code: Helpful functions """
-def ParsePubSubMessage(message):
+def ParsePubSubMessage(message:):
 
     """
     Decodes messages from Pub/Sub for further transformation.
