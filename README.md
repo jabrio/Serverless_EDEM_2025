@@ -405,4 +405,14 @@ gcloud services disable secretmanager.googleapis.com
 - Firestore
     - https://firebase.google.com/docs/firestore/quickstart#python
 
+- Cloud Functions
+    - https://cloud.google.com/functions/docs/console-quickstart
+
+- Artifact Registry
+    - https://cloud.google.com/artifact-registry/docs/repositories/create-repos
+
+- Cloud Run
+    - https://cloud.google.com/run/docs/deploying
+    - https://cloud.google.com/sql/docs/postgres/connect-run
+
 - [Dataflow Practical Exercises Guide](https://cloud.google.com/dataflow/docs/guides/)
