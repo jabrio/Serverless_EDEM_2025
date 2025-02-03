@@ -414,5 +414,3 @@ gcloud services disable secretmanager.googleapis.com
 - Cloud Run
     - https://cloud.google.com/run/docs/deploying
     - https://cloud.google.com/sql/docs/postgres/connect-run
-
-- [Dataflow Practical Exercises Guide](https://cloud.google.com/dataflow/docs/guides/)
