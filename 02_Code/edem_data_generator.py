@@ -95,7 +95,7 @@ def generate_battery_data(
         data.append({
             "vehicle_id": vehicle_id,
             "timestamp": timestamp.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "battery_level": round(battery_level, 2),
+            "battery_level": round(battery_level),
             "event_type": event_type
         })
 
