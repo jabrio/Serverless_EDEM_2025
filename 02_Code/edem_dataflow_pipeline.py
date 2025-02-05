@@ -95,8 +95,9 @@ def getTrafficImage(item, api_url):
 
 class FormatFirestoreDocument(beam.DoFn):
 
-    def __init__(self,mode):
+    def __init__(self, mode, firestore_collection):
         self.mode = mode
+        self.firestore_collection = firestore_collection
 
     def process(self, element):
 
