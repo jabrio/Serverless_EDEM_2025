@@ -9,7 +9,7 @@ steps:
            '--sdk-language=PYTHON',
            '--py-path=.',
            '--env=FLEX_TEMPLATE_PYTHON_PY_FILE=$_DATAFLOW_PYTHON_FILE_PATH',
-           '--env=FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=$__DATAFLOW_REQUIREMENTS_FILE_PATH'
+           '--env=FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE=$_DATAFLOW_REQUIREMENTS_FILE_PATH'
     ]
     waitFor: ['-']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
