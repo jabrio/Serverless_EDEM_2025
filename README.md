@@ -94,6 +94,12 @@ gcloud artifacts repositories create <YOUR_REPOSITORY_NAME> \
  --location=<YOUR_REGION_ID>
 ```
 
+- Run the following command to ensure that Docker is properly configured to authenticate with Artifact Registry.
+
+```
+gcloud auth configure-docker <YOUR_REGION_ID>-docker.pkg.dev
+```
+
 - Once the repository is created, go back to the terminal and navigate to the [Cloud Run](/02_Code/02_CloudRun/00_Service/) folder. Now, we are going to deploy a Cloud Run service with the Docker image of Grafana & a Cloud Run Job for dumping data from Firestore to BigQuery on a daily basis.
 
 #### Cloud Run Service
