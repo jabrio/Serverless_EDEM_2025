@@ -42,8 +42,7 @@ def get_pubsub_message(cloud_event):
 
     # Notification content
     content = f"""
-        Low battery warning: Your remaining range is {msg['payload']['inspection']['autonomy']} km.
-        Please find a charging station as soon as possible.
+        {msg['message']}
     """
 
     # Print out the message to simulate a call to Firebase
