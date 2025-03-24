@@ -318,6 +318,8 @@ SNS_TOPIC_ARN = <YOUR_SNS_TOPIC_ARN>>
 - In the template editor, paste this:
 
 ```
+#set($context.requestOverride.header.X-Amz-Target = "AWSEvents.PutEvents")
+#set($context.requestOverride.header.Content-Type = "application/x-amz-json-1.1")
 {
   "Entries": [
     {
