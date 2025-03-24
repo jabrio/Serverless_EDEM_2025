@@ -1,0 +1,36 @@
+# Generator
+
+python edem_data_generator.py \
+    --project_id 'serverless-edem' \
+    --telemetry_battery_topic 'battery_telemetry_topic' \
+    --telemetry_driving_topic 'driving_telemetry_topic' \
+    --telemetry_environment_topic 'environment_telemetry_topic' \
+    --city_name 'Javea'
+
+# Local
+
+python edem_dataflow_pipeline.py \
+    --project_id serverless-edem \
+    --battery_telemetry_subscription projects/serverless-edem/subscriptions/battery_telemetry_subscription \
+    --driving_telemetry_subscription projects/serverless-edem/subscriptions/driving_telemetry_subscription \
+    --environment_telemetry_subscription projects/serverless-edem/subscriptions/environment_telemetry_subscription \
+    --firestore_collection vehicle_telemetry_data \
+    --output_topic projects/serverless-edem/topics/serverless-edem-output \
+    --system_id jbg
+
+# Dataflow
+
+python edem_dataflow_pipeline.py \
+    --project_id serverless-edem \
+    --battery_telemetry_subscription projects/serverless-edem/subscriptions/battery_telemetry_subscription \
+    --driving_telemetry_subscription projects/serverless-edem/subscriptions/driving_telemetry_subscription \
+    --environment_telemetry_subscription projects/serverless-edem/subscriptions/environment_telemetry_subscription \
+    --firestore_collection vehicle_telemetry_data \
+    --output_topic projects/serverless-edem/topics/serverless-edem-output \
+    --system_id jbg \
+    --runner DataflowRunner \
+    --job_name serverless-edem \
+    --region europe-west4 \
+    --temp_location gs://serverless_edem_2025/tmp \
+    --staging_location gs://serverless_edem_2025/stg \
+    --requirements_file ./requirements.txt

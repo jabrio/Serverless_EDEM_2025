@@ -1,0 +1,6 @@
+user_id,item_id,event_type,timestamp
+user_001,loki,play,1711189200
+user_002,moana,search,1711190100
+user_003,the_mandalorian,play,1711191000
+user_001,encanto,play,1711194600
+user_004,zootopia_plus,browse,1711198200

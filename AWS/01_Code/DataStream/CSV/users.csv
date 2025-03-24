@@ -1,0 +1,5 @@
+user_id,subscription_type,region,preferred_device
+user_001,premium,US,tv
+user_002,basic,FR,mobile
+user_003,premium,BR,web
+user_004,basic,UK,tablet

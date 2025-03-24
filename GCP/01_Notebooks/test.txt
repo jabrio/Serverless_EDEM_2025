@@ -1,0 +1,7 @@
+python streaming_generator.py --project_id serverless-edem --topic_name test_beam
+
+docker tag grafana-cloud-run europe-southwest1-docker.pkg.dev/<PROJECT_ID>/<ARTIFACT_REPOSITORY>/grafana-cloud-run:<TAG>
+
+docker tag run_job europe-southwest1-docker.pkg.dev/serverless-edem/serverless-repository/run_job:v1
+
+docker push europe-southwest1-docker.pkg.dev/serverless-edem/serverless-repository/run_job:v1
