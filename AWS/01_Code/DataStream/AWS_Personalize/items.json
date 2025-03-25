@@ -12,7 +12,7 @@
         "type": "long"
       },
       {
-        "name": "GENRE",
+        "name": "GENRES",
         "type": "string",
         "categorical": true
       },
