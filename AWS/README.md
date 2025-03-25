@@ -37,9 +37,53 @@ cd /01_Code
 pip install -r requirements.txt
 ```
 
+### S3
+
+- Go to the **S3** Console.
+- Click **Create bucket**.
+- Give your bucket a **name**.
+- Click **Create bucket**.
+- Edit the bucket you just created.
+- Under Permissions, select **Bucket policy**.
+- Paste the following code:
+```
+{
+    "Version": "2012-10-17",
+    "Id": "PersonalizeS3BucketAccessPolicy",
+    "Statement": [
+        {
+            "Sid": "PersonalizeS3BucketAccessPolicy",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "personalize.amazonaws.com"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<YOUR_BUCKET_NAME>",
+                "arn:aws:s3:::<YOUR_BUCKET_NAME>/*"
+            ]
+        }
+    ]
+}
+```
+- Click **Save**.
+- Upload the CSVs files located in folder `01_Code/DataStream/AWS_Personalize/CSV/`
+
+### AWS Personalize.
+
+- Go to the **AWS Personalize** section in the AWS Console.
+- Create a **Dataset Group**.
+- Follow the steps within the Dataset created in the previous step:
+  - Create **datasets** from the CSVs placed in the bucket you just created and **import** them using a job.
+  - Set up **training** and **recommendation** resources.
+  - Once created, create an **event trackers** for real-time processing.
+
 ### Kinesis
 
-- Go to the **Kinesis Data Streams** section in the AWS Console
+- Go to the **Kinesis Data Streams** section in the AWS Console.
 - Click **Create data stream**.
 - Give your stream a **name** (e.g., DisneyClickstream).
 - Under Data stream capacity, select **On-demand** mode.

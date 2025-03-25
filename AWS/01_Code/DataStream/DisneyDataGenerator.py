@@ -18,10 +18,8 @@ import json
 import os
 
 """ Variables """
-USER_IDS = [f"user_{i}" for i in range(1, 21)]
-ACTIONS = ["login", "browse", "search", "play", "pause", "stop", "logout"]
-DEVICES = ["mobile", "tv", "web", "tablet"]
-LOCATIONS = ["US", "CA", "MX", "BR", "UK", "FR", "ES", "DE", "IT", "AU"]
+USER_IDS = [i for i in range(10000, 10030)]
+ACTIONS = ["Watch", "Play", "Stop"]
 DISNEY_CATALOG = [
     "The Mandalorian", "Loki", "Moana", "Turning Red", "Elemental", "Encanto", "Wish",
     "The Marvels", "Black Panther: Wakanda Forever", "Avatar: The Way of Water",
@@ -47,16 +45,16 @@ def generate_event():
     """
 
     action = random.choice(ACTIONS)
-    content = random.choice(DISNEY_CATALOG) if action in ["play", "pause", "stop", "browse"] else None
+    event_type = random.choice(DISNEY_CATALOG)
 
     return {
         "timestamp": datetime.utcnow().isoformat(),
-        "user_id": random.choice(USER_IDS),
-        "action": action,
-        "content_title": content,
-        "device": random.choice(DEVICES),
-        "location": random.choice(LOCATIONS)
+        "userId": str(random.choice(USER_IDS)),
+        "eventType": action,
+        "itemId": event_type,
+        "eventValue": None
     }
+
 
 """ Code: Entry Point """
 
@@ -81,7 +79,7 @@ def run_streaming(delay_seconds: int = 1):
             response = kinesis.put_record(
                 StreamName=STREAM_NAME,
                 Data=json.dumps(event),
-                PartitionKey=event["user_id"]
+                PartitionKey=event["userId"]
             )
             logging.info(f'Event sent to Kinesis | ShardId: {response["ShardId"]}')
         
