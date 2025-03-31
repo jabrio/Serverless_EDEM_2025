@@ -1,0 +1,41 @@
+{
+    "Comment": "Human-in-the-loop approval flow with SMS notification and DynamoDB logging",
+    "StartAt": "WaitForApproval",
+    "States": {
+      "WaitForApproval": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
+        "Parameters": {
+          "FunctionName": "arn:aws:lambda:eu-west-3:039612847525:function:LambdaHumanApproval",
+          "Payload": {
+            "taskToken.$": "$$.Task.Token",
+            "input.$": "$"
+          }
+        },
+        "TimeoutSeconds": 3600,
+        "Next": "CheckIfApproved"
+      },
+      "CheckIfApproved": {
+        "Type": "Choice",
+        "Choices": [
+          {
+            "Variable": "$.approved",
+            "BooleanEquals": true,
+            "Next": "NotifyAndInsert"
+          }
+        ],
+        "Default": "Rejected"
+      },
+      "NotifyAndInsert": {
+        "Type": "Task",
+        "Resource": "arn:aws:lambda:eu-west-3:039612847525:function:LambdaToSNS",
+        "End": true
+      },
+      "Rejected": {
+        "Type": "Fail",
+        "Error": "HumanRejected",
+        "Cause": "The request was rejected by the human approver."
+      }
+    }
+  }
+  
