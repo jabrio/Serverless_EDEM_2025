@@ -5,7 +5,7 @@ EDEM 2025
 
 - Professor: [Javi Briones](https://github.com/jabrio)
 
-## Data Stream
+## Data Stream
 
 #### Case description
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="WFM" width="120" h/>
@@ -202,10 +202,10 @@ docker push $ECR_URL:latest
 - Review the configuration and click **Create & Deploy**.
 - After deployment, the application will be accessible through the **URL** provided by App Runner.
 
-## Event-Driven 
+## Event-Driven 
 
 #### Case description
-<img src="https://www.kingconstructioninc.com/wp-content/uploads/2023/05/taco-bell-logo-png-transparent.png" alt="WFM" width="70" h/>
+<img src="https://www.cdnlogo.com/logos/t/38/taco-bell.svg" alt="WFM" width="70" h/>
 
 <br>
 
@@ -214,7 +214,7 @@ Taco Bell aims to enhance its order processing efficiency and scalability by imp
 #### Data Architecture
 <img src="00_DocAux/.images/AWS_EventDriven_Architecture.png" width="1500"/>
 
-### EventBridge
+### EventBridge
 
 - Go to the **Amazon EventBridge** Console.
 - In the left-hand menu, click on **Event Buses**.
