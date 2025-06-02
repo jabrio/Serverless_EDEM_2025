@@ -21,7 +21,7 @@ Disney+ is looking to analyze real-time user engagement across its streaming pla
 
 - Clone this **repo**
 - For this demo, we will be able to work both **locally** and in the **cloud shell**.
--Go to the **IAM Console**, navigate to the *Users* section, and create a new user. We will use this user's security credentials for our exercises.
+- Go to the **IAM Console**, navigate to the *Users* section, and create a new user. We will use this user's security credentials for our exercises.
 
 - Create a Python environment using Anaconda, selecting **Python 3.10 or 3.11** as the version.
 
