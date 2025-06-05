@@ -6,7 +6,7 @@
         "Type": "Task",
         "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
         "Parameters": {
-          "FunctionName": "arn:aws:lambda:eu-west-3:039612847525:function:LambdaHumanApproval",
+          "FunctionName": "arn:aws:lambda:eu-central-1:039612847525:function:LambdaHumanApproval",
           "Payload": {
             "taskToken.$": "$$.Task.Token",
             "input.$": "$"
@@ -28,7 +28,7 @@
       },
       "NotifyAndInsert": {
         "Type": "Task",
-        "Resource": "arn:aws:lambda:eu-west-3:039612847525:function:LambdaToSNS",
+        "Resource": "arn:aws:lambda:eu-central-1:039612847525:function:LambdaToSNS",
         "End": true
       },
       "Rejected": {
